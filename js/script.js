@@ -1,3 +1,25 @@
+
+//class Board{
+// public:
+//          vector<vector<int> ps;
+//          vector<string> move; 
+//          int white = 0; 
+//          int black = 0;
+//          clearMove();
+//          availableMove();     
+//}
+//ps is a 2d vector that stores the value of the board
+//1 is white
+//2 is black
+//3 is avalible move
+//0 is empty
+//move is a string vector that takes U,D,R,L,UR,UL,DL,DR as direction in the corresponded 2d board
+//white stores the white pieces on in the board right now
+//black stores the black pieces in the board right now
+//clearMove() empty all of the moves in the 2d board;
+//availableMove() update the board with availeble moves in the board and turn that move spot into value 3 
+//and push the direciton move string into the move value;
+//****************************-Object Class Starts Here-************************************* */
 class Board {
     constructor (ps) {
         this.pieces = ps;
@@ -11,6 +33,8 @@ class Board {
             [[], [], [], [], [], [], [], []],
             [[], [], [], [], [], [], [], []],
         ]
+        this.white = 0;
+        this.black = 0;
     }
     clearMove() {
         this.move = [
@@ -191,8 +215,13 @@ class Board {
         }
     }
 }
-
-
+//****************************-Object Class Ends Here-************************************* */
+var gap = 5;
+var cellWidth = 60;
+var pieces_layer;
+//turn 1 = white turns
+//turn 2 = black turns
+var turn = 1;
 var pieces = [
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
@@ -204,19 +233,8 @@ var pieces = [
     [0, 0, 0, 0, 0, 0, 0, 0]
 ]
 
+//initalize the starting board
 const initial_state = new Board(pieces);
-
-var gap = 5;
-var cellWidth = 60;
-var pieces_layer;
-//turn 1 = white turns
-//turn 2 = black turns
-var turn = 1;
-
-
-//black is 2
-//white is 1 
-//for the starting state
 
 
 window.onload = function () {
@@ -271,6 +289,7 @@ function drawBoard() {
     }
 }
 
+//clear all of the div that we rendered on the board with the class name "piece"
 function clearBoard() {
     const elements = document.getElementsByClassName("piece");
     while (elements.length > 0) {
@@ -284,6 +303,9 @@ function clearBoard() {
     initial_state.clearMove();
 }
 
+//clickedBoard gives i and j position that the user clicked on the boar
+//call clearBoard to get rid of the 3s in the board and clean the div
+//and update the new board by calling drawpieces function 
 function clickedBoard(row, column) {
     if (initial_state.pieces[row][column] == 3) {
         if (turn == 1) {
